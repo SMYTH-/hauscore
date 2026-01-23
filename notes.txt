@@ -1,0 +1,6 @@
+| Component         | Job                                |
+| ----------------- | ---------------------------------- |
+| `<BrowserRouter>` | Make React aware of the URL        |
+| `<Routes>`        | Decide which route matches         |
+| `<Route>`         | Define a rule (path → component)   |
+| `<Outlet>`        | Where the matched page is inserted |
