@@ -1,3 +1,9 @@
+// Repository answers questions, it does not care if the data exists, it just reports reality in a predictable shape.
+// | Question               | Answer                    |
+// | ---------------------- | ------------------------- |
+// | “Give me all trainers” | `Trainer[]` (maybe empty) |
+// | “Give me this trainer” | `Trainer` or `null`       |
+
 import type { Trainer } from '../types';
 import { trainersMock } from '../data/trainers.mock';
 
