@@ -1,51 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import type { Trainer } from '../types';
-import { trainersRepository } from '../api/trainers.repository';
-
-type Status = 'loading' | 'success' | 'error';
+import { TrainerCard } from '../components/TrainerCard';
+import { useTrainers } from '../hooks/useTrainers';
 
 export function TrainersListPage() {
-  const requestIdRef = useRef(0);
-  const [status, setStatus] = useState<Status>('loading');
-  const [trainers, setTrainers] = useState<Trainer[]>([]);
-  const [q, setQ] = useState('');
-  const [debouncedQ, setDebouncedQ] = useState('');
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedQ(q);
-    }, 300);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [q]);
-
-  useEffect(() => {
-    const requestId = ++requestIdRef.current;
-
-    void (async () => {
-      setStatus('loading');
-
-      try {
-        const results = await trainersRepository.list({
-          q: debouncedQ,
-        });
-
-        if (requestId !== requestIdRef.current) return;
-
-        setTrainers(results);
-        setStatus('success');
-      } catch (error) {
-        console.error(error);
-
-        if (requestId !== requestIdRef.current) return;
-
-        setStatus('error');
-      }
-    })();
-  }, [debouncedQ]);
+  const { q, setQ, status, trainers } = useTrainers();
 
   let content = null;
 
@@ -60,9 +17,7 @@ export function TrainersListPage() {
       <ul style={{ marginTop: 16 }}>
         {trainers.map((t) => (
           <li key={t.id} style={{ marginBottom: 12 }}>
-            <Link to={`/trainers/${t.slug}`}>{t.name}</Link>
-            <div>{t.location}</div>
-            <div>{t.headline}</div>
+            <TrainerCard trainer={t} />
           </li>
         ))}
       </ul>
