@@ -16,6 +16,7 @@ export type TrainerListFilters = {
 export interface TrainersRepository {
   list(filters?: TrainerListFilters): Promise<Trainer[]>;
   getBySlug(slug: string): Promise<Trainer | null>;
+  getFilterOptions(): Promise<{ locations: string[]; specialties: string[] }>;
 }
 
 // Mock implementation for now.
@@ -50,5 +51,12 @@ export const trainersRepository: TrainersRepository = {
 
   async getBySlug(slug) {
     return trainersMock.find((t) => t.slug === slug) ?? null;
+  },
+
+  async getFilterOptions() {
+    const locations = Array.from(new Set(trainersMock.map((t) => t.location))).sort();
+    const specialties = Array.from(new Set(trainersMock.flatMap((t) => t.specialties))).sort();
+
+    return { locations, specialties };
   },
 };

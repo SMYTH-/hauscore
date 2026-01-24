@@ -6,24 +6,44 @@ export type Status = 'loading' | 'success' | 'error';
 
 export function useTrainers() {
   const [q, setQ] = useState('');
+
+  // Selected filters (singular)
   const [location, setLocation] = useState('');
   const [specialty, setSpecialty] = useState('');
+
+  // Available filter options (plural)
+  const [locations, setLocations] = useState<string[]>([]);
+  const [specialties, setSpecialties] = useState<string[]>([]);
+
   const [debouncedQ, setDebouncedQ] = useState('');
   const [status, setStatus] = useState<Status>('loading');
   const [trainers, setTrainers] = useState<Trainer[]>([]);
 
   const requestIdRef = useRef(0);
 
+  // Load filter options once
+  useEffect(() => {
+    void (async () => {
+      try {
+        const opts = await trainersRepository.getFilterOptions();
+        setLocations(opts.locations);
+        setSpecialties(opts.specialties);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  // Debounce q -> debouncedQ
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedQ(q);
     }, 300);
 
-    return () => {
-      clearTimeout(timerId);
-    };
+    return () => clearTimeout(timerId);
   }, [q]);
 
+  // Fetch trainers when query or filters change
   useEffect(() => {
     const requestId = ++requestIdRef.current;
 
@@ -58,6 +78,8 @@ export function useTrainers() {
     setLocation,
     specialty,
     setSpecialty,
+    locations,
+    specialties,
     status,
     trainers,
   };
