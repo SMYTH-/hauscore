@@ -2,8 +2,8 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 export function AppLayout() {
   return (
-    <div className="min-h-dvh bg-zinc-50 text-zinc-900">
-      <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white/80 backdrop-blur">
+    <div className="min-h-dvh bg-zinc-50 text-zinc-900 w-full">
+      <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white/80 backdrop-blur w-full">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-semibold tracking-tight">Corehaus</span>
@@ -36,7 +36,7 @@ export function AppLayout() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto max-w-5xl px-4 py-8 w-full">
         <Outlet />
       </main>
     </div>
