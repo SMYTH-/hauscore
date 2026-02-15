@@ -15,7 +15,7 @@ export function AppLayout() {
               to="/"
               className={({ isActive }) =>
                 `rounded-md px-3 py-2 text-sm font-medium ${
-                  isActive ? 'bg-zinc-900 text-white' : 'text-zinc-700 hover:bg-zinc-100'
+                  isActive ? 'bg-zinc-900 !text-white' : 'text-zinc-700 hover:bg-zinc-100'
                 }`
               }
             >
@@ -26,7 +26,7 @@ export function AppLayout() {
               to="/trainers"
               className={({ isActive }) =>
                 `rounded-md px-3 py-2 text-sm font-medium ${
-                  isActive ? 'bg-zinc-900 text-white' : 'text-zinc-700 hover:bg-zinc-100'
+                  isActive ? 'bg-zinc-900 !text-white' : 'text-zinc-700 hover:bg-zinc-100'
                 }`
               }
             >
