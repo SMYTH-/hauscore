@@ -1,70 +1,180 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+/* =========================
+   Premium Gym Theme (Option A)
+   Neutral base + electric lime accent
+   - Inter for body
+   - Oswald for headings
+   - Tailwind-friendly tokens (CSS variables)
+   ========================= */
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
+  /* Font + rendering */
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   text-rendering: optimizeLegibility;
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme tokens (LIGHT) */
+  --bg: 255 255 255;
+  --fg: 15 23 42;           /* slate-900 */
+  --muted: 100 116 139;     /* slate-500 */
+  --muted-2: 148 163 184;   /* slate-400 */
+
+  --card: 248 250 252;      /* slate-50 */
+  --card-fg: 15 23 42;
+  --border: 226 232 240;    /* slate-200 */
+  --ring: 203 213 225;      /* slate-300 */
+
+  /* Electric lime accent */
+  --primary: 132 204 22;    /* lime-500 */
+  --primary-600: 101 163 13;/* lime-600 */
+  --primary-fg: 9 9 11;     /* near-black for contrast */
+
+  /* Semantic */
+  --success: 34 197 94;     /* green-500 */
+  --warning: 245 158 11;    /* amber-500 */
+  --danger: 239 68 68;      /* red-500 */
+
+  /* Subtle shadow tone */
+  --shadow: 15 23 42;       /* slate-900 */
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Dark mode: add class="dark" on <html> (Tailwind: darkMode: "class") */
+.dark {
+  --bg: 2 6 23;             /* slate-950 */
+  --fg: 226 232 240;        /* slate-200 */
+  --muted: 148 163 184;     /* slate-400 */
+  --muted-2: 100 116 139;   /* slate-500 */
+
+  --card: 15 23 42;         /* slate-900 */
+  --card-fg: 226 232 240;
+  --border: 30 41 59;       /* slate-800 */
+  --ring: 51 65 85;         /* slate-700 */
+
+  --primary: 163 230 53;    /* lime-400 */
+  --primary-600: 132 204 22;/* lime-500 */
+  --primary-fg: 9 9 11;
+
+  --success: 74 222 128;    /* green-400 */
+  --warning: 251 191 36;    /* amber-400 */
+  --danger: 248 113 113;    /* red-400 */
+
+  --shadow: 0 0 0;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  html,
+  body {
+    height: 100%;
   }
+
+  body {
+    margin: 0;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+  }
+
+  /* Keep headings “display” — sizes should be done in components via Tailwind */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Oswald", system-ui, sans-serif;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    color: rgb(var(--fg));
+  }
+
+  small {
+    color: rgb(var(--muted));
+  }
+
+  a {
+    color: rgb(var(--primary));
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
   a:hover {
-    color: #747bff;
+    color: rgb(var(--primary-600));
   }
-  button {
-    background-color: #f9f9f9;
+
+  /* Better global form defaults */
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::selection {
+    background: rgba(132, 204, 22, 0.25);
+  }
+
+  /* Focus ring (works well alongside Tailwind’s focus utilities) */
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Optional utility classes you can use in markup without rebuilding everything */
+  .app-container {
+    @apply mx-auto w-full max-w-6xl px-4;
+  }
+
+  .card {
+    background-color: rgb(var(--card));
+    color: rgb(var(--card-fg));
+    border: 1px solid rgb(var(--border));
+    border-radius: 1rem;
+    box-shadow:
+      0 1px 2px rgba(var(--shadow), 0.06),
+      0 12px 24px rgba(var(--shadow), 0.06);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background-color: rgb(var(--primary));
+    color: rgb(var(--primary-fg));
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(var(--primary-600));
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border-color: rgb(var(--border));
+    color: rgb(var(--fg));
+  }
+
+  .btn-secondary:hover {
+    background-color: rgba(var(--fg), 0.04);
+  }
+
+  .input {
+    @apply w-full rounded-xl px-3 py-2 text-sm transition;
+    background-color: rgb(var(--bg));
+    border: 1px solid rgb(var(--border));
+  }
+
+  .input:focus {
+    border-color: rgb(var(--primary));
+    box-shadow: 0 0 0 4px rgba(132, 204, 22, 0.15);
+    outline: none;
+  }
+
+  .muted {
+    color: rgb(var(--muted));
+  }
+
+  .border-default {
+    border-color: rgb(var(--border));
   }
 }
