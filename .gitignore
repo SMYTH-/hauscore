@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-notes.txt
 
 # Dependencies
 node_modules/
@@ -14,6 +13,7 @@ node_modules/
 # Build output
 dist/
 dist-ssr/
+.next/
 
 # Local / env
 *.local
@@ -23,9 +23,6 @@ dist-ssr/
 
 # TypeScript
 *.tsbuildinfo
-
-# Vite
-.vite/
 
 # Editor directories and files
 .vscode/*
@@ -38,3 +35,9 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Storybook
+storybook-static/
+
+# Payload
+apps/payload/.next/

@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@source "./**/*.{ts,tsx}";
+
+@import "./tokens/globals.css";
+
+@layer base {
+	body {
+		background-color: var(--background);
+		color: var(--foreground);
+		font-family: var(--font-sans);
+	}
+}

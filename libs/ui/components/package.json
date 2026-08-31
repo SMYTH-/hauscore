@@ -1,0 +1,18 @@
+{
+	"name": "@hauscore/components",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./index.ts",
+		"./index.js": "./index.ts"
+	},
+	"dependencies": {
+		"@hauscore/utils": "workspace:*",
+		"lucide-react": "0.542.0"
+	},
+	"peerDependencies": {
+		"react": "^18 || ^19",
+		"react-dom": "^18 || ^19"
+	}
+}

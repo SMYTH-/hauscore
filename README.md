@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Hauscore (Werkowt)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+pnpm monorepo for the Werkowt trainer marketplace — Payload CMS + Postgres, design system in Storybook.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 22+
+- pnpm 10+
+- Docker (for local Postgres)
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+pnpm install
+pnpm payload:db
+cp apps/payload/.env.example apps/payload/.env   # set PAYLOAD_SECRET
+cd apps/payload && pnpm db:setup                 # reset DB, migrate, seed
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+If `pnpm migrate` fails with **type already exists**, the database was auto-pushed by a previous dev session. Reset and migrate:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+cd apps/payload && pnpm db:reset && pnpm migrate && pnpm seed
 ```
+
+Run migrations **before** first dev boot on a fresh database. Dev auto-push is disabled (`push: false`) so schema is migration-managed only.
+
+## Development
+
+```bash
+pnpm dev          # Payload + Next.js at http://localhost:3000
+pnpm storybook    # Storybook at http://localhost:6006
+```
+
+## Structure
+
+- `apps/payload` — Next.js + Payload CMS
+- `libs/ui` — design tokens, Storybook host (`@hauscore/ui`)
+- `libs/ui/components` — React component library (`@hauscore/components`)
+- `libs/utils` — shared helpers (`@hauscore/utils`)
+
+See [AGENTS.md](./AGENTS.md) for conventions.

@@ -1,0 +1,53 @@
+{
+	"name": "payload",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+		"dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+		"devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+		"generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+		"migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
+		"db:reset": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/reset-db.ts",
+		"db:setup": "pnpm db:reset && pnpm migrate && pnpm seed",
+		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+		"seed:trainers": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-trainers.ts",
+		"seed:pages": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-pages.ts",
+		"seed:home": "pnpm seed:pages",
+		"seed": "pnpm seed:trainers && pnpm seed:pages",
+		"start": "cross-env NODE_OPTIONS=--no-deprecation next start -H 0.0.0.0 -p ${PORT:-3000}"
+	},
+	"dependencies": {
+		"@hauscore/components": "workspace:*",
+		"@hauscore/ui": "workspace:*",
+		"@hauscore/utils": "workspace:*",
+		"@payloadcms/db-postgres": "3.87.1",
+		"@payloadcms/next": "3.87.1",
+		"@payloadcms/richtext-lexical": "3.87.1",
+		"@payloadcms/ui": "3.87.1",
+		"cross-env": "10.1.0",
+		"graphql": "^16.8.1",
+		"next": "16.3.0",
+		"payload": "3.87.1",
+		"pg": "8.20.0",
+		"react": "19.2.6",
+		"react-dom": "19.2.6",
+		"sharp": "0.34.2"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "4.2.1",
+		"@types/node": "24.12.3",
+		"@types/pg": "8.20.0",
+		"@types/react": "19.2.14",
+		"@types/react-dom": "19.2.3",
+		"tailwindcss": "4.2.1",
+		"tsx": "4.22.4",
+		"typescript": "6.0.3"
+	},
+	"engines": {
+		"node": ">=22",
+		"pnpm": "^9 || ^10 || ^11"
+	}
+}

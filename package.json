@@ -1,48 +1,37 @@
 {
-  "name": "hauscore",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@radix-ui/react-slot": "^1.2.4",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.12.0",
-    "tailwind-merge": "^3.4.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "autoprefixer": "^10.4.23",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "postcss": "^8.5.6",
-    "prettier": "^3.8.1",
-    "shadcn": "^3.8.4",
-    "tailwindcss": "^4.1.18",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.53.1",
-    "vite": "^7.2.4"
-  }
+	"name": "hauscore",
+	"private": true,
+	"type": "module",
+	"packageManager": "pnpm@10.34.1",
+	"scripts": {
+		"dev": "pnpm --filter payload dev",
+		"payload": "pnpm --filter payload dev",
+		"payload:db": "docker compose -f apps/payload/docker-compose.yml up -d",
+		"start": "pnpm --filter payload start",
+		"storybook": "pnpm --filter @hauscore/ui storybook",
+		"build": "pnpm --filter '*' build",
+		"lint": "oxlint .",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"typecheck": "pnpm exec tsc --noEmit -p libs/ui/components/tsconfig.json"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "4.2.1",
+		"@tailwindcss/vite": "4.2.1",
+		"oxfmt": "0.39.0",
+		"oxlint": "1.53.0",
+		"tailwindcss": "4.2.1",
+		"typescript": "6.0.3"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": ["esbuild", "sharp", "unrs-resolver"],
+		"overrides": {
+			"react": "19.2.6",
+			"react-dom": "19.2.6"
+		}
+	},
+	"dependencies": {
+		"clsx": "2.1.1",
+		"tailwind-merge": "3.5.0"
+	}
 }
